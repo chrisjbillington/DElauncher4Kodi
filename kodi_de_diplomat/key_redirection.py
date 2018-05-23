@@ -72,11 +72,15 @@ class KodiClient(object):
 def get_mediakey_devices():
     """Find all input devices that have any of given media keys."""
     devices = []
+    print('Capturing media keys from:')
     for device_file in evdev.list_devices():
         device = evdev.InputDevice(device_file)
         keys = set(device.capabilities().get(ev.EV_KEY, []))
         if keys.intersection(MEDIA_KEYS):
+            print('  ' + device.name)
             devices.append(device)
+    if not devices:
+        print('  <no devices with media keys found>')
     return devices
 
 

@@ -51,6 +51,8 @@ To install, run:
 sudo pip3 install kodi_de_diplomat
 ```
 
+and then log out and in again.
+
 (replace `pip3` with `pip` if that is what the pip binary for Python 3 is called on your computer. Python 3.6+ required)
 
 A new launcher should appear in your DE's menu/launcher called "Kodi with DE
@@ -60,8 +62,6 @@ once `kodi` exits. You can continue to use your DE while `kodi` is running, on a
 separate monitor, by switching workspaces, or pressing, alt-tab or whatever, but
 there will be no audio other than `kodi` and media keys will not have any effect on
 any programs other than `kodi`.
-
-You may find that the media key forwarding does not work until you reboot after installation.
 
 to uninstall, run:
 ```bash
@@ -117,9 +117,13 @@ Installation performs the following actions:
 
 * Creates group `uinput` if it does not exist
 
-* Adds the current user to the group `uinput`
+* Adds the current user to the groups `uinput` and `input` 
 
 * Adds a desktop file to `/usr/local/share/applications/kodi_de_diplomat.desktop`
 
-Uninstalling with pip will not the user from the 'uinput' group or delete the 'uinput' group. Run `sudo delgroup uinput` to do this.
+Uninstalling with pip will not remove the user from the `uinput` and `input` groups
+or delete the `uinput` group. Run `sudo delgroup uinput; sudo deluser $USER input`
+to do this. However, it's possible that the user was already in the `input` group
+for some other reason, so removing them from the group may interfere with other
+software.
 
