@@ -77,8 +77,14 @@ def get_mediakey_devices():
         device = evdev.InputDevice(device_file)
         keys = set(device.capabilities().get(ev.EV_KEY, []))
         if keys.intersection(MEDIA_KEYS):
-            print('  ' + device.name)
-            devices.append(device)
+            try:
+                device.grab()
+                device.ungrab()
+            except OSError:
+                print('  [IGNORING] ' + device.name, '(not accessible)')
+            else:
+                print('  ' + device.name)
+                devices.append(device)
     if not devices:
         print('  <no devices with media keys found>')
     return devices
