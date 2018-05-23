@@ -1,0 +1,3 @@
+syntax: glob
+kodi_de_diplomat/__pycache__/*
+kodi_de_diplomat/__version__.py
