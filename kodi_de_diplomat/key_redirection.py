@@ -21,7 +21,7 @@ from threading import Thread
 import evdev
 import evdev.ecodes as ev
 
-from .xbmcclient import PacketACTION, ACTION_BUTTON, PacketHELO, ICON_PNG
+from .xbmcclient import PacketACTION, ACTION_BUTTON
 
 
 # Kodi eventserver details:

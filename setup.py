@@ -4,7 +4,7 @@
 #
 # If the package is not registered with PyPI yet, do so with:
 #
-# python setup.py register
+# python3 setup.py register
 
 import sys
 import os
