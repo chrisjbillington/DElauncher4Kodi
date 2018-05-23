@@ -11,7 +11,7 @@ import os
 from setuptools import setup
 from setuptools.command.install import install
 
-VERSION = '1.0.0'
+VERSION = '1.0.1'
 
 # Auto generate a __version__ package for the package to import
 with open(os.path.join('kodi_de_diplomat', '__version__.py'), 'w') as f:
@@ -23,21 +23,21 @@ def checkrun(cmd):
     if rc:
         sys.exit(rc)
 
+def post_install():
+    # Add udev group, add user to the group, and add udev rule to allow the
+    # group to write to /dev/uinput
+    try:
+        checkrun(f'getent group uinput > /dev/null || groupadd uinput')
+        checkrun(f'adduser $SUDO_USER uinput')
+    except SystemExit:
+        msg = "Setting uinput permissions failed, did you run with sudo?\n"
+        sys.stderr.write(msg)
+        raise
 
-class PostInstallCommand(install):
+class Install(install):
     def run(self):
-        # Add udev group, add user to the group, and add udev rule to allow the
-        # group to write to /dev/uinput
-        try:
-            checkrun(f'getent group uinput > /dev/null || groupadd uinput')
-            checkrun(f'adduser $SUDO_USER uinput')
-            checkrun('udevadm control --reload-rules && sudo udevadm trigger')
-        except SystemExit:
-            msg = "Setting uinput permissions failed, did you run with sudo?\n"
-            sys.stderr.write(msg)
-            raise
         install.run(self)
-
+        post_install()
 
 setup(name='kodi_de_diplomat',
       version=VERSION,
@@ -49,9 +49,10 @@ setup(name='kodi_de_diplomat',
       packages=['kodi_de_diplomat'],
       data_files = [
                     ('share/applications', ['data/org.kodi_de_diplomat.desktop']),
-                    ('/etc/udev/rules.d', ['data/99-uinput-group-access.rules'])
+                    ('/etc/udev/rules.d',
+                         ['data/99-kodi-de-diplomat-uinput-group-access.rules'])
                    ],
       install_requires=['evdev', 'pulsectl'],
-      cmdclass={'install': PostInstallCommand},
+      cmdclass={'install': Install},
      )
 
