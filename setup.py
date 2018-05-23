@@ -11,7 +11,7 @@ import os
 from setuptools import setup
 from setuptools.command.install import install
 
-VERSION = '1.0.1'
+VERSION = '1.0.3'
 
 # Auto generate a __version__ package for the package to import
 with open(os.path.join('kodi_de_diplomat', '__version__.py'), 'w') as f:
@@ -29,8 +29,9 @@ def post_install():
     try:
         checkrun(f'getent group uinput > /dev/null || groupadd uinput')
         checkrun(f'adduser $SUDO_USER uinput')
+        checkrun(f'udevadm control --reload-rules && udevadm trigger')
     except SystemExit:
-        msg = "Setting uinput permissions failed, did you run with sudo?\n"
+        msg = "Adding uinput group failed, did you run with sudo?\n"
         sys.stderr.write(msg)
         raise
 
