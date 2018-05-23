@@ -18,6 +18,7 @@ import os
 from select import select
 from socket import socket, AF_INET, SOCK_DGRAM
 from threading import Thread
+from collections import defaultdict
 import evdev
 import evdev.ecodes as ev
 
@@ -108,6 +109,18 @@ class grab_all(object):
             dev.ungrab()
 
 
+def all_capabilities(devices):
+    all_capabilities = defaultdict(set)
+    # Merge the capabilities of all devices into one dictionary.
+    for dev in devices:
+        for ev_type, ev_codes in dev.capabilities().items():
+            all_capabilities[ev_type].update(ev_codes)
+    for evtype in (ev.EV_SYN, ev.EV_FF):
+        if evtype in all_capabilities:
+            del all_capabilities[evtype]
+    return all_capabilities
+
+
 class KeyRedirection(object):
     def __init__(self):
         self.thread = None
@@ -133,7 +146,8 @@ class KeyRedirection(object):
         kodi_client = KodiClient(HOST, PORT)
         devices = get_mediakey_devices()
         with grab_all(devices):
-            with evdev.UInput.from_device(*devices) as ui:
+            capabilities = all_capabilities(devices)
+            with evdev.UInput(capabilities) as ui:
                 for event in self.read_events(devices):
                     if not kodi_client.handle_event(event):
                         ui.write_event(event)
