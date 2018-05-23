@@ -51,7 +51,7 @@ To install, run:
 sudo pip3 install kodi_de_diplomat
 ```
 
-and then log out and in again.
+and then reboot.
 
 (replace `pip3` with `pip` if that is what the pip binary for Python 3 is called on your computer. Python 3.6+ required)
 
