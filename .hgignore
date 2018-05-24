@@ -4,3 +4,4 @@ kodi_de_diplomat/__version__.py
 build/*
 kodi_de_diplomat.egg-info/*
 dist/*
+*.egg-info/*

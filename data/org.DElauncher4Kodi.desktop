@@ -11,7 +11,7 @@ Categories=AudioVideo;Video;Player;TV;
 
 Actions=Fullscreen;Standalone;
 
-Name[en_AU]=org.DElauncher4Kodi.desktop
+Name[en_AU]=org.DElauncher4Kodi
 
 [Desktop Action Fullscreen]
 Name=Open in fullscreen
