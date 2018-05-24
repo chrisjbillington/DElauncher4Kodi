@@ -1,7 +1,7 @@
 syntax: glob
-kodi_de_diplomat/__pycache__/*
-kodi_de_diplomat/__version__.py
 build/*
-kodi_de_diplomat.egg-info/*
 dist/*
 *.egg-info/*
+DElauncher4Kodi/__version__.py
+DElauncher4Kodi/__pycache__/*
+DElauncher4Kodi.egg-info/*
