@@ -11,7 +11,7 @@ import os
 from setuptools import setup
 from setuptools.command.install import install
 
-VERSION = '1.2.1'
+VERSION = '1.2.2'
 
 # Auto generate a __version__ package for the package to import
 with open(os.path.join('DElauncher4Kodi', '__version__.py'), 'w') as f:
