@@ -161,3 +161,55 @@ running. This can be fixed by rebooting or by deleting the lock file
 `/tmp/kodi_de_diplomat.lock`. If you are seeing Python tracebacks in the terminal
 output, this indicates either a bug in my code or something I didn't anticipate
 might go wrong. Please report this as an issue on bitbucket so I can fix it.
+
+### Example terminal output
+
+This is what the terminal output should look like when everything is running
+correctly:
+
+```
+$ /usr/bin/python3 -m kodi_de_diplomat kodi
+This is kodi_de_diplomat version 1.1.1.
+Please report bugs to bitbucket.org/cbillington/kodi_de_diplomat
+
+Initiating key capturing
+  Capturing media keys from:
+    /dev/input/event21: lircd-uinput
+    /dev/input/event14: Dell WMI hotkeys
+    /dev/input/event11: Intel HID events
+    /dev/input/event4: AT Translated Set 2 keyboard
+Key capturing setup complete
+
+Initiating audio reconfiguration
+  Getting current default sink info:
+    name: alsa_output.pci-0000_00_1f.3.analog-stereo
+    volume: 28 %
+    mute: False
+  Creating null sink as default sink:
+    name: kodi_de_diplomat.nullsink_
+    module #: 98
+  Moving exising audio streams to null sink:
+    Spotify
+  Setting original default sink to 100 % volume
+Audio reconfiguration complete pending kodi startup
+
+Starting kodi...
+Waiting for kodi audio stream to appear
+  Audio stream has appeared
+  moving kodi audio stream to original default sink
+Kodi exited
+
+Stopping key capturing
+Key capturing stopped
+
+Restoring audio configuration
+  Setting original default sink to 0 % volume
+  Restoring original default sink
+  Moving streams back to default sink:
+    Spotify
+  Unloading null sink module
+  Restoring original volume
+Audio configuration restored
+
+Done
+```
