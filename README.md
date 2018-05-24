@@ -66,7 +66,7 @@ any programs other than `kodi`.
 
 to uninstall, run:
 ```bash
-sudo pip3 install DElauncher4Kodi
+sudo pip3 uninstall DElauncher4Kodi
 ```
 
 ## Ear safety warning
