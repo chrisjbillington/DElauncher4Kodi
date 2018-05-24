@@ -1,4 +1,4 @@
-DElauncher4Kodi 1.1
+DElauncher4Kodi 1.2
 ====================
 
 [View on PyPI](http://pypi.python.org/pypi/DElauncher4Kodi)
