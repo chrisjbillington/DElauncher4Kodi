@@ -14,7 +14,7 @@ from setuptools.command.install import install
 VERSION = '1.1.1'
 
 # Auto generate a __version__ package for the package to import
-with open(os.path.join('kodi_de_diplomat', '__version__.py'), 'w') as f:
+with open(os.path.join('DElauncher4Kodi', '__version__.py'), 'w') as f:
     f.write("__version__ = '%s'\n"%VERSION)
 
 
@@ -41,16 +41,16 @@ class Install(install):
         install.run(self)
         post_install()
 
-setup(name='kodi_de_diplomat',
+setup(name='DElauncher4Kodi',
       version=VERSION,
       description="Kodi launcher grabbing media keys and adjusting system volume.",
       author='Chris Billington',
       author_email='chrisjbillington@gmail.com',
-      url='https://bitbucket.org/cbillington/kodi_de_diplomat/',
+      url='https://bitbucket.org/cbillington/DElauncher4Kodi/',
       license="GPL2",
-      packages=['kodi_de_diplomat'],
+      packages=['DElauncher4Kodi'],
       data_files = [
-                    ('share/applications', ['data/org.kodi_de_diplomat.desktop']),
+                    ('share/applications', ['data/org.DElauncher4Kodi.desktop']),
                     ('/etc/udev/rules.d',
                          ['data/99-kodi-de-diplomat-uinput-group-access.rules'])
                    ],

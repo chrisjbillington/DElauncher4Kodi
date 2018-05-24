@@ -22,8 +22,8 @@ from .key_redirection import KeyRedirection
 from .volume_adjustment import VolumeAdjustment
 from . import __version__
 
-LOCKFILE = '/tmp/kodi_de_diplomat.lock'
-errmsg = ('kodi_de_diplomat already running, or did not close correctly. ' +
+LOCKFILE = '/tmp/DElauncher4Kodi.lock'
+errmsg = ('DElauncher4Kodi already running, or did not close correctly. ' +
           f'If the latter, remove the lock file {LOCKFILE} ' + 
            '(or reboot) and try again.')
 
@@ -47,9 +47,9 @@ def main():
     key_redirector = KeyRedirection()
     volume_adjuster = VolumeAdjustment()
     with lockfile(LOCKFILE, errmsg):
-        print(f'This is kodi_de_diplomat version {__version__}.')
+        print(f'This is DElauncher4Kodi version {__version__}.')
         print('Please report bugs to ' +
-              'bitbucket.org/cbillington/kodi_de_diplomat\n')
+              'bitbucket.org/cbillington/DElauncher4Kodi\n')
         try:
             key_redirector.start()
             volume_adjuster.start()

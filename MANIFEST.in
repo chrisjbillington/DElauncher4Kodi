@@ -1,3 +1,3 @@
 include LICENSE
-include data/org.kodi_de_diplomat.desktop
-include data/99-kodi-de-diplomat-uinput-group-access.rules
+include data/org.DElauncher4kodi.desktop
+include data/99-DElauncher4kodi-uinput-group-access.rules

@@ -1,8 +1,8 @@
-kodi_de_diplomat 1.1
+DElauncher4Kodi 1.1
 ====================
 
-[View on PyPI](http://pypi.python.org/pypi/kodi_de_diplomat)
-| [View on BitBucket](https://bitbucket.org/cbillington/kodi_de_diplomat)
+[View on PyPI](http://pypi.python.org/pypi/DElauncher4Kodi)
+| [View on BitBucket](https://bitbucket.org/cbillington/DElauncher4Kodi)
 
 # Table of Contents
 1. [Introduction](#Introduction)
@@ -37,7 +37,7 @@ problems exist for anyone trying to do this:
   computers are often slow for things that are not GPU accelerated, so logging out
   and in again can be pretty slow.
 
-`kodi_de_diplomat` solves both problems by setting the system volume to 100% before
+`DElauncher4Kodi` solves both problems by setting the system volume to 100% before
 launching `kodi`, and grabbing all keyboard input and forwarding media keys as
 commands to `kodi` directly.
 
@@ -49,7 +49,7 @@ you are running linux and PulseAudio.
 To install, run:
 
 ```bash
-sudo pip3 install kodi_de_diplomat
+sudo pip3 install DElauncher4Kodi
 ```
 
 and then reboot.
@@ -67,34 +67,34 @@ any programs other than `kodi`.
 
 to uninstall, run:
 ```bash
-sudo pip3 install kodi_de_diplomat
+sudo pip3 install DElauncher4Kodi
 ```
 
 ## Ear safety warning
-Because `kodi_de_diplomat` sets the system volume to 100%, either a bug in my
+Because `DElauncher4Kodi` sets the system volume to 100%, either a bug in my
 program or deliberate modification of PulseAudio settings by the user whilst kodi
 is running has the potential to allow other running applications to output audio at
 100% volume. For the safety of your ears should this occur, do not use
-`kodi_de_diplomat` with headphones. You have been warned.
+`DElauncher4Kodi` with headphones. You have been warned.
 
 ## Implementation details
 
 ### Media key forwarding
-`kodi_de_diplomat` uses the linux kernel's `evdev` library to capture all key
+`DElauncher4Kodi` uses the linux kernel's `evdev` library to capture all key
 events from devices that have media keys. If an event corresponds to one of the
-media keys `kodi_de_diplomat` knows about, it sends the appropriate command to
+media keys `DElauncher4Kodi` knows about, it sends the appropriate command to
 `kodi` over its UDP interface on `localhost:9777`. Otherwise, it forwards the event
 to a `uinput` device (using the kernel's `uinput` library) such that it appears to
 the system as an ordinary keypress, which the window manager will receive as
 normal. This latter forwarding of events back to the system requires
-`kodi_de_diplomat` either run as root, or have permission to write to
+`DElauncher4Kodi` either run as root, or have permission to write to
 `/dev/uinput`. The installer configures a `udev` rule to allow the `uinput` group
-to write to `/dev/uinput` and adds the user to that group. `kodi_de_diplomat` will
+to write to `/dev/uinput` and adds the user to that group. `DElauncher4Kodi` will
 therefore only be able to forward media keys when run as that user - other users
 need to be added to the `uinput` group in order for it to work for them too.
 
 ### Audio levels
-`kodi_de_diplomat` performs the following actions before starting kodi using the `pulseaudio` library:
+`DElauncher4Kodi` performs the following actions before starting kodi using the `pulseaudio` library:
 
 * Notes the current volume and mute state of the current output
 
@@ -107,7 +107,7 @@ need to be added to the `uinput` group in order for it to work for them too.
 
 Once `kodi` starts, its audio output is moved to the real output (as it is
 initially set to the null sink, since the null sink was default). Then, once `kodi`
-exits, `kodi_de_diplomat`
+exits, `DElauncher4Kodi`
 
 * Restores the volume and mute state of the output
 
@@ -120,12 +120,12 @@ This has the effect of silencing all audio other than `kodi` whilst `kodi` is ru
 
 ## Uninstalling
 
-`sudo pip3 uninstall kodi_de_diplomat` will remove all files added by the
+`sudo pip3 uninstall DElauncher4Kodi` will remove all files added by the
 installer. If you installed without pip, you will need to delete them manually.
 
 Installation performs the following actions:
 
-* Installs Python package `kodi_de_diplomat`
+* Installs Python package `DElauncher4Kodi`
 
 * Adds a udev rule `/etc/udev/rules.d/99-kodi-de-diplomat-uinput-group-access.rules`
 
@@ -133,7 +133,7 @@ Installation performs the following actions:
 
 * Adds the current user to the groups `uinput` and `input` 
 
-* Adds a desktop file to `/usr/local/share/applications/kodi_de_diplomat.desktop`
+* Adds a desktop file to `/usr/local/share/applications/DElauncher4Kodi.desktop`
 
 Uninstalling with pip will not remove the user from the `uinput` and `input` groups
 or delete the `uinput` group. Run `sudo delgroup uinput; sudo deluser $USER input`
@@ -144,21 +144,21 @@ software.
 ## Troubleshooting
 
 Plugging in a keyboard or wireless remote after starting kodi? Sorry,
-`kodi_DE_diplomat` doesn't support hot-plugging - you'll have to restart kodi
+`DElauncher4Kodi` doesn't support hot-plugging - you'll have to restart kodi
 before the media keys on a newly plugged in device will be correctly forwarded to
 kodi.
 
-Something else not working? Try running `kodi_de_diplomat` from the command line:
+Something else not working? Try running `DElauncher4Kodi` from the command line:
 
 ```bash
-python3 -m kodi_de_diplomat kodi
+python3 -m DElauncher4Kodi kodi
 ```
 
 And see if the output it produces explains what's wrong. For example, only one
-instance of `kodi_de_diplomat` can run at a time, and if it doesn't shut down
+instance of `DElauncher4Kodi` can run at a time, and if it doesn't shut down
 properly, it will display an error because it thinks another instance is still
 running. This can be fixed by rebooting or by deleting the lock file
-`/tmp/kodi_de_diplomat.lock`. If you are seeing Python tracebacks in the terminal
+`/tmp/DElauncher4Kodi.lock`. If you are seeing Python tracebacks in the terminal
 output, this indicates either a bug in my code or something I didn't anticipate
 might go wrong. Please report this as an issue on bitbucket so I can fix it.
 
@@ -168,9 +168,9 @@ This is what the terminal output should look like when everything is running
 correctly:
 
 ```text
-$ /usr/bin/python3 -m kodi_de_diplomat kodi
-This is kodi_de_diplomat version 1.1.1.
-Please report bugs to bitbucket.org/cbillington/kodi_de_diplomat
+$ /usr/bin/python3 -m DElauncher4Kodi kodi
+This is DElauncher4Kodi version 1.1.1.
+Please report bugs to bitbucket.org/cbillington/DElauncher4Kodi
 
 Initiating key capturing
   Capturing media keys from:
@@ -186,7 +186,7 @@ Initiating audio reconfiguration
     volume: 28 %
     mute: False
   Creating null sink as default sink:
-    name: kodi_de_diplomat.nullsink_
+    name: DElauncher4Kodi.nullsink_
     module #: 98
   Moving exising audio streams to null sink:
     Spotify

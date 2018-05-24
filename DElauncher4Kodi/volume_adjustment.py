@@ -16,10 +16,10 @@
 
 from subprocess import check_output, check_call
 import pulsectl
-from threading import Thread, Event
+from threading import Thread
 import time
 
-NULL_SINK_NAME = "kodi_de_diplomat.nullsink"
+NULL_SINK_NAME = "DElauncher4Kodi.nullsink"
 CLIENT_NAME = 'kodi-de-diplomat'
 
 

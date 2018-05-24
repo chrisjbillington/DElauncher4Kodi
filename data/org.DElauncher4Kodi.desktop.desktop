@@ -1,9 +1,9 @@
 [Desktop Entry]
 Version=1.0
-Name=Kodi with DE diplomat
+Name=DE luncher for Kodi
 GenericName=Media Center
 Comment=Manage and view your media
-Exec=python3 -m kodi_de_diplomat kodi
+Exec=python3 -m DElauncher4Kodi kodi
 Icon=kodi
 Terminal=false
 Type=Application
@@ -11,10 +11,12 @@ Categories=AudioVideo;Video;Player;TV;
 
 Actions=Fullscreen;Standalone;
 
+Name[en_AU]=org.DElauncher4Kodi.desktop
+
 [Desktop Action Fullscreen]
 Name=Open in fullscreen
-Exec=python3 -m kodi_de_diplomat kodi -fs
+Exec=python3 -m DElauncher4Kodi kodi -fs
 
 [Desktop Action Standalone]
 Name=Open in standalone mode
-Exec=python3 -m kodi_de_diplomat kodi --standalone
+Exec=python3 -m DElauncher4Kodi kodi --standalone
