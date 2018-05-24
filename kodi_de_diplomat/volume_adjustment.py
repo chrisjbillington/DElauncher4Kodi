@@ -129,8 +129,8 @@ class VolumeAdjustment(object):
         with pulsectl.Pulse(CLIENT_NAME) as pulse:
             print('Waiting for kodi audio stream to appear')
             stream = self.wait_for_kodi(pulse)
-            print('  Audio stream has appeared')
             if stream is not None:
+                print('  Audio stream has appeared')
                 try:
                     print('  moving kodi audio stream to original default sink')
                     pulse.sink_input_move(stream.index, self.sink.index)
