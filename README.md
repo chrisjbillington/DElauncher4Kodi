@@ -1,4 +1,4 @@
-kodi_de_diplomat 1.0
+kodi_de_diplomat 1.1
 ====================
 
 [View on PyPI](http://pypi.python.org/pypi/kodi_de_diplomat)
@@ -80,13 +80,14 @@ is running has the potential to allow other running applications to output audio
 ## Implementation details
 
 ### Media key forwarding
-`kodi_de_diplomat` uses the linux kernel's `udev` library to capture all key events
-from devices that have media keys. If an event corresponda to one of the media keys
-`kodi_de_diplomat` knows about, it sends the appropriate command to `kodi` over its
-UDP interface on `localhost:9777`. Otherwise, it forwards the event to the `uinput`
-device such that it appears to the system as an ordinary keypress, which the window
-manager will receive as normal. This latter forwarding of events back to the system
-requires `kodi_de_diplomat` either run as root, or have permission to write to
+`kodi_de_diplomat` uses the linux kernel's `evdev` library to capture all key
+events from devices that have media keys. If an event corresponds to one of the
+media keys `kodi_de_diplomat` knows about, it sends the appropriate command to
+`kodi` over its UDP interface on `localhost:9777`. Otherwise, it forwards the event
+to a `uinput` device (using the kernel's `uinput` library) such that it appears to
+the system as an ordinary keypress, which the window manager will receive as
+normal. This latter forwarding of events back to the system requires
+`kodi_de_diplomat` either run as root, or have permission to write to
 `/dev/uinput`. The installer configures a `udev` rule to allow the `uinput` group
 to write to `/dev/uinput` and adds the user to that group. `kodi_de_diplomat` will
 therefore only be able to forward media keys when run as that user - other users
