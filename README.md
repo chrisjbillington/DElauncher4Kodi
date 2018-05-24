@@ -57,7 +57,7 @@ and then reboot.
 (replace `pip3` with `pip` if that is what the pip binary for Python 3 is called on
 your computer. Python 3.6+ required)
 
-A new launcher should appear in your DE's menu/launcher called "DE laucher for Kodi". Running that instead of the ordinary `kodi` launcher will turn on the
+A new launcher should appear in your DE's menu/launcher called "DE launcher for Kodi". Running that instead of the ordinary `kodi` launcher will turn on the
 volume change and media key redirection, run `kodi`, then restore things to normal
 once `kodi` exits. You can continue to use your DE while `kodi` is running, on a
 separate monitor, by switching workspaces, or pressing, alt-tab or whatever, but
