@@ -156,7 +156,7 @@ class KeyRedirection(object):
         devices = get_mediakey_devices()
         with grab_all(devices):
             capabilities = all_capabilities(devices)
-            with evdev.UInput(capabilities, name='kodi-de-diplomat-uinput') as ui:
+            with evdev.UInput(capabilities, name='DElauncher4Kodi-uinput') as ui:
                 self.ready.set()
                 for event in self.read_events(devices):
                     if not kodi_client.handle_event(event):

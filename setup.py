@@ -52,7 +52,7 @@ setup(name='DElauncher4Kodi',
       data_files = [
                     ('share/applications', ['data/org.DElauncher4Kodi.desktop']),
                     ('/etc/udev/rules.d',
-                         ['data/99-kodi-de-diplomat-uinput-group-access.rules'])
+                         ['data/99-DElauncher4Kodi-uinput-group-access.rules'])
                    ],
       install_requires=['evdev', 'pulsectl'],
       cmdclass={'install': Install},

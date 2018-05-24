@@ -20,7 +20,7 @@ from threading import Thread
 import time
 
 NULL_SINK_NAME = "DElauncher4Kodi.nullsink"
-CLIENT_NAME = 'kodi-de-diplomat'
+CLIENT_NAME = 'DElauncher4Kodi'
 
 
 def make_null_sink(name):
