@@ -11,8 +11,6 @@ Categories=AudioVideo;Video;Player;TV;
 
 Actions=Fullscreen;Standalone;
 
-Name[en_AU]=org.DElauncher4Kodi
-
 [Desktop Action Fullscreen]
 Name=Open in fullscreen
 Exec=python3 -m DElauncher4Kodi kodi -fs
