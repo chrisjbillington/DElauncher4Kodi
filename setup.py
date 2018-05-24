@@ -11,7 +11,7 @@ import os
 from setuptools import setup
 from setuptools.command.install import install
 
-VERSION = '1.1.1'
+VERSION = '1.2.0'
 
 # Auto generate a __version__ package for the package to import
 with open(os.path.join('DElauncher4Kodi', '__version__.py'), 'w') as f:
@@ -46,7 +46,7 @@ setup(name='DElauncher4Kodi',
       description="Kodi launcher grabbing media keys and adjusting system volume.",
       author='Chris Billington',
       author_email='chrisjbillington@gmail.com',
-      url='https://bitbucket.org/cbillington/DElauncher4Kodi/',
+      url='https://github.com/chrisjbillington/DElauncher4Kodi/',
       license="GPL2",
       packages=['DElauncher4Kodi'],
       data_files = [

@@ -49,7 +49,7 @@ def main():
     with lockfile(LOCKFILE, errmsg):
         print(f'This is DElauncher4Kodi version {__version__}.')
         print('Please report bugs to ' +
-              'bitbucket.org/cbillington/DElauncher4Kodi\n')
+              'github.com/chrisjbillington/DElauncher4Kodi/\n')
         try:
             key_redirector.start()
             volume_adjuster.start()

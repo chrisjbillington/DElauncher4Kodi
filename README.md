@@ -2,7 +2,7 @@ DElauncher4Kodi 1.1
 ====================
 
 [View on PyPI](http://pypi.python.org/pypi/DElauncher4Kodi)
-| [View on BitBucket](https://bitbucket.org/cbillington/DElauncher4Kodi)
+| [View on Github](https://github.com/chrisjbillington/DElauncher4Kodi/)
 
 # Table of Contents
 1. [Introduction](#Introduction)
@@ -160,7 +160,7 @@ properly, it will display an error because it thinks another instance is still
 running. This can be fixed by rebooting or by deleting the lock file
 `/tmp/DElauncher4Kodi.lock`. If you are seeing Python tracebacks in the terminal
 output, this indicates either a bug in my code or something I didn't anticipate
-might go wrong. Please report this as an issue on bitbucket so I can fix it.
+might go wrong. Please report this as an issue on github so I can fix it.
 
 ### Example terminal output
 
@@ -169,8 +169,8 @@ correctly:
 
 ```text
 $ /usr/bin/python3 -m DElauncher4Kodi kodi
-This is DElauncher4Kodi version 1.1.1.
-Please report bugs to bitbucket.org/cbillington/DElauncher4Kodi
+This is DElauncher4Kodi version 1.2.0.
+Please report bugs to github.com/chrisjbillington/DElauncher4Kodi/
 
 Initiating key capturing
   Capturing media keys from:
