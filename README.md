@@ -167,7 +167,7 @@ might go wrong. Please report this as an issue on bitbucket so I can fix it.
 This is what the terminal output should look like when everything is running
 correctly:
 
-```
+```text
 $ /usr/bin/python3 -m kodi_de_diplomat kodi
 This is kodi_de_diplomat version 1.1.1.
 Please report bugs to bitbucket.org/cbillington/kodi_de_diplomat
