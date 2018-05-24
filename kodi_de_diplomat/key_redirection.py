@@ -17,7 +17,7 @@
 import os
 from select import select
 from socket import socket, AF_INET, SOCK_DGRAM
-from threading import Thread
+from threading import Thread, Event
 from collections import defaultdict
 import evdev
 import evdev.ecodes as ev
@@ -70,10 +70,13 @@ class KodiClient(object):
         return False
 
 
+def longname(device):
+    return f'{device.fn}: {device.name}'
+
 def get_mediakey_devices():
     """Find all input devices that have any of given media keys."""
     devices = []
-    print('Capturing media keys from:')
+    print('  Capturing media keys from:')
     for device_file in evdev.list_devices():
         device = evdev.InputDevice(device_file)
         keys = set(device.capabilities().get(ev.EV_KEY, []))
@@ -82,12 +85,12 @@ def get_mediakey_devices():
                 device.grab()
                 device.ungrab()
             except OSError:
-                print('  [IGNORING] ' + device.name, '(not accessible)')
+                print(f'    [IGNORING] {longname(device)} (not accessible)')
             else:
-                print('  ' + device.name)
+                print(f'    {longname(device)}')
                 devices.append(device)
     if not devices:
-        print('  <no devices with media keys found>')
+        print('    <no devices with media keys found>')
     return devices
 
 
@@ -127,27 +130,34 @@ class KeyRedirection(object):
         self.stop_fd_reader = None
         self.stop_fd_writer = None
         self.running = False
+        self.ready = Event()
 
     def start(self):
+        print('Initiating key capturing')
         self.stop_fd_reader, self.stop_fd_writer = os.pipe()
         self.thread = Thread(target=self.mainloop)
         self.thread.start()
+        self.ready.wait()
+        print('Key capturing setup complete\n')
         self.running = True
 
     def stop(self):
+        print('Stopping key capturing')
         os.write(self.stop_fd_writer, b'stop')
         os.close(self.stop_fd_writer)
         self.stop_fd_writer = None
         self.thread.join()
         self.thread = None
         self.running = False
+        print('Key capturing stopped\n')
 
     def mainloop(self):
         kodi_client = KodiClient(HOST, PORT)
         devices = get_mediakey_devices()
         with grab_all(devices):
             capabilities = all_capabilities(devices)
-            with evdev.UInput(capabilities) as ui:
+            with evdev.UInput(capabilities, name='kodi-de-diplomat-uinput') as ui:
+                self.ready.set()
                 for event in self.read_events(devices):
                     if not kodi_client.handle_event(event):
                         ui.write_event(event)
@@ -166,5 +176,14 @@ class KeyRedirection(object):
                 self.stop_fd_reader = None
                 raise StopIteration
             for fd in r:
-                for event in devices_by_fd[fd].read():
-                    yield event
+                try:
+                    for event in devices_by_fd[fd].read():
+                        yield event
+                except OSError:
+                    # Device likely removed.
+                    device = devices_by_fd[fd]
+                    if not os.path.exists(device.fn):
+                        print(f'[REMOVED] {longname(device)}')
+                        fds.remove(fd)
+                        os.close(fd)
+                        del devices_by_fd[fd]

@@ -9,7 +9,8 @@ kodi_de_diplomat 1.0
 2. [Installation](#Installation)
 3. [Ear safety warning](#Ear-safety-warning)
 4. [Implementation details](#Implementation-details)
-4. [Uninstalling](#Uninstalling)
+5. [Uninstalling](#Uninstalling)
+5. [Troubleshooting](#Troubleshooting)
 
 ## Introduction
 
@@ -53,7 +54,8 @@ sudo pip3 install kodi_de_diplomat
 
 and then reboot.
 
-(replace `pip3` with `pip` if that is what the pip binary for Python 3 is called on your computer. Python 3.6+ required)
+(replace `pip3` with `pip` if that is what the pip binary for Python 3 is called on
+your computer. Python 3.6+ required)
 
 A new launcher should appear in your DE's menu/launcher called "Kodi with DE
 diplomat". Running that instead of the ordinary `kodi` launcher will turn on the
@@ -79,7 +81,16 @@ is running has the potential to allow other running applications to output audio
 
 ### Media key forwarding
 `kodi_de_diplomat` uses the linux kernel's `udev` library to capture all key events
-from devices that have media keys. If an event corresponda to one of the media keys `kodi_de_diplomat` knows about, it sends the appropriate command to `kodi` over its UDP interface on `localhost:9777`. Otherwise, it forwards the event to the `uinput` device such that it appears to the system as an ordinary keypress, which the window manager will receive as normal. This latter forwarding of events back to the system requires `kodi_de_diplomat` either run as root, or have permission to write to `/dev/uinput`. The installer configures a `udev` rule to allow the `uinput` group to write to `/dev/uinput` and adds the user to that group. `kodi_de_diplomat` will therefore only be able to forward media keys when run as that user - other users need to be added to the `uinput` group in order for it to work for them too.
+from devices that have media keys. If an event corresponda to one of the media keys
+`kodi_de_diplomat` knows about, it sends the appropriate command to `kodi` over its
+UDP interface on `localhost:9777`. Otherwise, it forwards the event to the `uinput`
+device such that it appears to the system as an ordinary keypress, which the window
+manager will receive as normal. This latter forwarding of events back to the system
+requires `kodi_de_diplomat` either run as root, or have permission to write to
+`/dev/uinput`. The installer configures a `udev` rule to allow the `uinput` group
+to write to `/dev/uinput` and adds the user to that group. `kodi_de_diplomat` will
+therefore only be able to forward media keys when run as that user - other users
+need to be added to the `uinput` group in order for it to work for them too.
 
 ### Audio levels
 `kodi_de_diplomat` performs the following actions before starting kodi using the `pulseaudio` library:
@@ -93,7 +104,9 @@ from devices that have media keys. If an event corresponda to one of the media k
 
 * Sets the real output to 100% volume and unmuted
 
-Once `kodi` starts, its audio output is moved to the real output (as it is initially set to the null sink, since the null sink was default). Then, once `kodi` exits, `kodi_de_diplomat`
+Once `kodi` starts, its audio output is moved to the real output (as it is
+initially set to the null sink, since the null sink was default). Then, once `kodi`
+exits, `kodi_de_diplomat`
 
 * Restores the volume and mute state of the output
 
@@ -127,3 +140,23 @@ to do this. However, it's possible that the user was already in the `input` grou
 for some other reason, so removing them from the group may interfere with other
 software.
 
+## Troubleshooting
+
+Plugging in a keyboard or wireless remote after starting kodi? Sorry,
+`kodi_DE_diplomat` doesn't support hot-plugging - you'll have to restart kodi
+before the media keys on a newly plugged in device will be correctly forwarded to
+kodi.
+
+Something else not working? Try running `kodi_de_diplomat` from the command line:
+
+```bash
+python3 -m kodi_de_diplomat kodi
+```
+
+And see if the output it produces explains what's wrong. For example, only one
+instance of `kodi_de_diplomat` can run at a time, and if it doesn't shut down
+properly, it will display an error because it thinks another instance is still
+running. This can be fixed by rebooting or by deleting the lock file
+`/tmp/kodi_de_diplomat.lock`. If you are seeing Python tracebacks in the terminal
+output, this indicates either a bug in my code or something I didn't anticipate
+might go wrong. Please report this as an issue on bitbucket so I can fix it.
