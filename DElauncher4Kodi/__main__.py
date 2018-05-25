@@ -40,7 +40,7 @@ def lockfile(path, errmsg):
         try:
             os.unlink(path)
         except Exception:
-            raise
+            pass
 
 
 def main():
