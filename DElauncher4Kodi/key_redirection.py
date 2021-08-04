@@ -174,7 +174,7 @@ class KeyRedirection(object):
                 os.read(self.stop_fd_reader, 1024)
                 os.close(self.stop_fd_reader)
                 self.stop_fd_reader = None
-                raise StopIteration
+                return
             for fd in r:
                 try:
                     for event in devices_by_fd[fd].read():
